@@ -10,7 +10,7 @@ PRIORITY_VALUES = {"High" : 1, "Medium" : 2, "Low":3}
 
 class TaskManager:
     def __init__(self, json_file=JSON_FILE,stats_file=STATS_JSON_FILE):
-        self.json_file = JSON_FILE
+        self.json_file = json_file
         self.tasks = self.load_tasks()
         self.gamification = GamificationManager(stats_file)
         
@@ -52,6 +52,12 @@ class TaskManager:
         if not task_name:
             raise ValueError("Task name field cannot be empty. Please fill it")
         
+        if deadline:
+            try:
+                datetime.strptime(deadline, "%d-%m-%Y %H:%M")
+            except ValueError:
+                raise ValueError("Invalid deadline format. Use DD-MM-YYYY HH:MM")
+
         task = {
             "task_name": task_name,
             "task_description": task_description.strip(),

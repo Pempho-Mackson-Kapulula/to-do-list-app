@@ -1,5 +1,5 @@
 @echo off
-set PYTHONPATH=%CD%
+set PYTHONPATH=%CD%\src
 
 echo Running All Project Unit Tests...
-python -m unittest discover -s tests -p "test_*.py" -v
+py -m unittest discover -s tests -p "test_*.py" -v

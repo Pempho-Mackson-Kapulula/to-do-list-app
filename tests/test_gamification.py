@@ -1,6 +1,6 @@
 import os
 import unittest
-from src.gamification import GamificationManager, PRIORITY_XP, LEVEL_THRESHOLDS
+from gamification import GamificationManager, PRIORITY_XP, LEVEL_THRESHOLDS
 
 
 class TestGamificationManager(unittest.TestCase):

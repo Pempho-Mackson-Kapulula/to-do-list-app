@@ -2,7 +2,7 @@ import unittest
 import tempfile
 import json
 import os
-from test_task_manager import TaskManager, PRIORITY_VALUE
+from task_manager import TaskManager, PRIORITY_VALUES
 
 
 class TestTaskManager(unittest.TestCase):
@@ -14,7 +14,7 @@ class TestTaskManager(unittest.TestCase):
         self.tmp.close()
         self.stats_tmp = "test_stats.json"
         # Pass both file paths so tests don't touch real data
-        self.manager = TaskManager(data_file=self.tmp.name, stats_file=self.stats_tmp)
+        self.manager = TaskManager(json_file=self.tmp.name, stats_file=self.stats_tmp)
 
     def tearDown(self):
         """Delete the temporary files after each test."""
