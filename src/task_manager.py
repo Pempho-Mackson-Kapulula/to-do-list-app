@@ -1,4 +1,5 @@
 import json
+import datetime
 
 
 JSON_FILE = "todos.json"
@@ -41,4 +42,25 @@ class TaskManager:
     
     def save_tasks(self):
         with open(self.json_file, mode = "w") as f:
-            json.dump(self.tasks,f,indent=5)    
+            json.dump(self.tasks,f,indent=5) 
+            
+    
+    def add_task(self,task_name,task_description="",category="Personal",priority="Low",deadline=""):
+        task_name = task_name.strip()
+        if not task_name:
+            raise ValueError("Task name field cannot be empty. Please fill it")
+        
+        task = {
+            "task_name": task_name,
+            "task_description": task_description.strip(),
+            "done": False,
+            "category": category,
+            "priority": priority,
+            "deadline": deadline,
+            "xp_awarded": False,
+            "created": datetime.now().strftime("%d-%m-%Y %H:%M")
+        }   
+        
+        self.tasks.append(task)
+        self.save_tasks()
+        return task
