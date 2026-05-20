@@ -128,7 +128,7 @@ class TaskManager:
         if field == "deadline":
             deadline_str = task.get("deadline", "")
             if deadline_str == "":
-                return datetime.MAXYEAR
+                return datetime.max
             else:
                 return datetime.strptime(deadline_str, "%d-%m-%Y %H:%M")
 
@@ -138,6 +138,10 @@ class TaskManager:
     def sort_tasks(self, field="deadline", reverse=False):
         self.tasks.sort(key=lambda task: self.get_sort_value(task, field), reverse=reverse)
         self.save_tasks()
+        
+    def get_stats(self):
+        done = sum(1 for task in self.tasks if task["done"])
+        return done, len(self.tasks)
 
 
         

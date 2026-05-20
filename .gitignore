@@ -1,2 +1,12 @@
 _pycache_/
 beginner.md
+
+# Virtual Environments
+.venv/
+venv/
+ENV/
+env/
+
+# Environments / Secrets
+.env
+.secrets
