@@ -4,7 +4,7 @@ import datetime
 
 JSON_FILE = "todos.json"
 
-PRIORITY_VALUES = {"High" : 1, "MEdium" : 2, "Low":3}
+PRIORITY_VALUES = {"High" : 1, "Medium" : 2, "Low":3}
 
 
 class TaskManager:
@@ -89,6 +89,55 @@ class TaskManager:
     def delete_task(self, index):
         if index < 0 or index >= len(self.tasks):
             raise IndexError("Invalid task index.")
-        removed = self.tasks.pop(index)
+        removed_task = self.tasks.pop(index)
         self.save_tasks()
-        return removed
+        return removed_task
+    
+    def get_sort_value(self, task, field):
+        if field == "priority":
+            current_priority = task.get("priority", "Medium")
+            return PRIORITY_VALUES.get(current_priority, 2)
+
+        if field == "status":
+            if task.get("done") == True:
+                return 0
+            else:
+                return 1
+
+        if field == "deadline":
+            deadline_str = task.get("deadline", "")
+            if deadline_str == "":
+                return datetime(2099, 1, 1)
+            else:
+                return datetime.strptime(deadline_str, "%d-%m-%Y %H:%M")
+
+        fallback_value = task.get(field, "")
+        return str(fallback_value).lower()
+    
+    def get_sort_value(self, task, field):
+        if field == "priority":
+            current_priority = task.get("priority", "Medium")
+            return PRIORITY_VALUES.get(current_priority, 2)
+
+        if field == "status":
+            if task.get("done") == True:
+                return 0
+            else:
+                return 1
+
+        if field == "deadline":
+            deadline_str = task.get("deadline", "")
+            if deadline_str == "":
+                return datetime.MAXYEAR
+            else:
+                return datetime.strptime(deadline_str, "%d-%m-%Y %H:%M")
+
+        fallback_value = task.get(field, "")
+        return str(fallback_value).lower()
+    
+    def sort_tasks(self, field="deadline", reverse=False):
+        self.tasks.sort(key=lambda task: self.get_sort_value(task, field), reverse=reverse)
+        self.save_tasks()
+
+
+        
