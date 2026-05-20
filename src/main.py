@@ -1,4 +1,4 @@
-from app_gui
+from app_gui import main
 
-#if __name__ == "__main__":
-    #main()
+if __name__ == "__main__":
+    main()
