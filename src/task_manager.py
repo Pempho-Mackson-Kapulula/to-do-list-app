@@ -1,6 +1,7 @@
 import json
-import datetime
-
+from datetime import datetime
+import os
+from gamification import GamificationManager, STATS_JSON_FILE
 
 JSON_FILE = "todos.json"
 
@@ -8,9 +9,10 @@ PRIORITY_VALUES = {"High" : 1, "Medium" : 2, "Low":3}
 
 
 class TaskManager:
-    def __init__(self, json_file=JSON_FILE):
+    def __init__(self, json_file=JSON_FILE,stats_file=STATS_JSON_FILE):
         self.json_file = JSON_FILE
         self.tasks = self.load_tasks()
+        self.gamification = GamificationManager(stats_file)
         
     def  load_tasks(self):
         if not os.path.exists(self.json_file):
@@ -71,6 +73,7 @@ class TaskManager:
         
         task = self.tasks[index]
         
+        gamification_result = None
         if task["done"] == True:
             task["done"] = False
         else:
