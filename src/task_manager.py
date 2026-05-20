@@ -64,3 +64,31 @@ class TaskManager:
         self.tasks.append(task)
         self.save_tasks()
         return task
+    
+    def toggle_task(self,index):
+        if index < 0 or index >= len(self.tasks):
+            raise IndexError("Invalid task index")
+        
+        task = self.tasks[index]
+        
+        if task["done"] == True:
+            task["done"] = False
+        else:
+            task["done"] = True
+            
+        if task["done"] == True and task["xp_awarded"] == False:
+            gamification_result = self.gamification.record_completion(task["priority"])
+            task["xp_awarded"] = True
+            
+        elif task["done"] == False:
+            task["xp_awarded"] = False
+            
+        self.save_tasks()
+        return  {"task": task, "gamification": gamification_result}
+    
+    def delete_task(self, index):
+        if index < 0 or index >= len(self.tasks):
+            raise IndexError("Invalid task index.")
+        removed = self.tasks.pop(index)
+        self.save_tasks()
+        return removed
