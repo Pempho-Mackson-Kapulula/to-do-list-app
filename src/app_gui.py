@@ -5,7 +5,7 @@ from datetime import date
 from task_manager import TaskManager
 import os
 from gamification import ACHIEVEMENTS
-
+from theme import *
 
 class TodoApp:
     """The main application window and all its widgets."""
@@ -26,6 +26,7 @@ class TodoApp:
         self.create_widgets()
         self.refresh_list()
         self.refresh_gamification_stats()
+        apply_theme(self.root)
 
     def create_widgets(self):
         """Build all the UI elements in a compact, minimal split layout."""
@@ -42,7 +43,7 @@ class TodoApp:
         stats_frame = ttk.LabelFrame(left_panel, text=" Your Stats ", padding="8")
         stats_frame.pack(fill=tk.X, pady=(0, 10))
 
-        self.level_label = ttk.Label(stats_frame, text="Level 1", font=("Helvetica", 11, "bold"))
+        self.level_label = ttk.Label(stats_frame, text="Level 1", font=(SUBHEADING))
         self.level_label.pack(anchor=tk.W, pady=(0, 4))
 
         # Horizontal layout for progress tracking
@@ -50,10 +51,10 @@ class TodoApp:
         prog_frame.pack(fill=tk.X, pady=(0, 4))
         self.xp_progress = ttk.Progressbar(prog_frame, orient=tk.HORIZONTAL, length=120, mode="determinate")
         self.xp_progress.pack(side=tk.LEFT, padx=(0, 5))
-        self.xp_label = ttk.Label(prog_frame, text="0 XP", font=("Helvetica", 9))
+        self.xp_label = ttk.Label(prog_frame, text="0 XP", font=(SMALL))
         self.xp_label.pack(side=tk.LEFT)
 
-        self.streak_label = ttk.Label(stats_frame, text="Streak: 0 days", font=("Helvetica", 9))
+        self.streak_label = ttk.Label(stats_frame, text="Streak: 0 days", font=(SMALL))
         self.streak_label.pack(anchor=tk.W)
         self.achievements_frame = ttk.Frame(stats_frame)
         self.achievements_frame.pack(fill=tk.X, pady=(6, 0))
@@ -143,7 +144,7 @@ class TodoApp:
         self.sort_btn.pack(side=tk.RIGHT)
 
         # Minimalist Stats Footer placed inside the left sidebar context
-        self.stats_label = ttk.Label(left_panel, text="", font=("Helvetica", 9, "italic"))
+        self.stats_label = ttk.Label(left_panel, text="", font=(SMALL))
         self.stats_label.pack(anchor=tk.W, pady=(5, 0))
 
         # ---- RIGHT PANEL: MAIN DATA VIEW ----
@@ -151,7 +152,7 @@ class TodoApp:
         right_panel.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
 
         # Title Label
-        title = ttk.Label(right_panel, text="To-Do List", font=("Helvetica", 14, "bold"))
+        title = ttk.Label(right_panel, text="To-Do List", font=(HEADING))
         title.pack(anchor=tk.W, pady=(0, 5))
 
         # Task List Layout
@@ -177,6 +178,8 @@ class TodoApp:
         self.tree.column("category", width=80, anchor=tk.W)
         self.tree.column("priority", width=70, anchor=tk.W)
         self.tree.column("deadline", width=110, anchor=tk.W)
+        self.tree.tag_configure("done", foreground=MUTED_BROWN, font=("Georgia", 10, "italic"))
+        self.tree.tag_configure("pending", foreground=DARK_BROWN, font=("Georgia", 10))
 
         scrollbar = ttk.Scrollbar(list_frame, orient=tk.VERTICAL, command=self.tree.yview)
         self.tree.configure(yscrollcommand=scrollbar.set)
@@ -346,6 +349,7 @@ class TodoApp:
         # Add each task as a new row
         for task in self.manager.tasks:
             status = "Done" if task["done"] else "Pending"
+            tag = "done" if task["done"] else "pending"
             self.tree.insert(
                 "",
                 tk.END,
@@ -356,7 +360,8 @@ class TodoApp:
                     task.get("category", ""),
                     task.get("priority", ""),
                     task.get("deadline", "")
-                )
+                ),
+                tags=(tag,)
             )
 
         # Update the footer stats
