@@ -76,8 +76,6 @@ pip install -r requirements.txt
 
 **On Windows (PowerShell / CMD):**
 
-> **Note:** PowerShell requires the `.\` prefix to run scripts in the current directory. The batch file auto-detects a `venv` folder and uses its Python interpreter if available; otherwise it falls back to the system `py` launcher.
-
 ```batch
 .\main.bat
 ```
