@@ -1,7 +1,6 @@
 import os
 import unittest
-from gamification import GamificationManager, PRIORITY_XP, LEVEL_THRESHOLDS
-
+from gamification import GamificationManager, PRIORITY_XP, LEVEL_THRESHOLDS, ACHIEVEMENTS
 
 class TestGamificationManager(unittest.TestCase):
     """Tests for the GamificationManager class."""
@@ -73,6 +72,82 @@ class TestGamificationManager(unittest.TestCase):
         self.assertEqual(self.g.stats["level"], max_level)
         xp_in, needed = self.g.xp_progress_in_level()
         self.assertEqual(needed, 0)
+    
+    def test_level_titles(self):
+        """Each level should have the correct title in LEVEL_TITLES."""
+        # Check that every level from 1 to 10 has a title
+        for level in range(1, 11):
+            self.g.stats["level"] = level
+            title = self.g.get_level_title()
+            self.assertEqual(title, LEVEL_TITLES[level])
+            # The title should be a non-empty string
+            self.assertIsInstance(title, str)
+            self.assertTrue(len(title) > 0)
+            
+    def test_level_title_unknown_level(self):
+        """A level outside 1-10 should return 'Unknown', not crash."""
+        # Level 0
+        self.g.stats["level"] = 0
+        self.assertEqual(self.g.get_level_title(), "Unknown")
+        # Level 99
+        self.g.stats["level"] = 99
+        self.assertEqual(self.g.get_level_title(), "Unknown")
+        
+    def test_first_achievement_unlocked(self):
+        """Completing a task for the first time should unlock 'first_blood'."""
+        result = self.g.record_completion("Medium", "Personal")
+        # Check that first_blood is in the newly earned list
+        self.assertIn("first_blood", result["new_achievements"])
+        # Check that it's also saved in the stats
+        self.assertIn("first_blood", self.g.stats["achievements"])
+    
+    def test_achievement_not_re_earned(self):
+        """Earning the same achievement twice should not duplicate it."""
+        # First completion — unlocks first_blood
+        result1 = self.g.record_completion("Medium", "Personal")
+        self.assertIn("first_blood", result1["new_achievements"])
+
+        # Second completion — first_blood should NOT appear again
+        result2 = self.g.record_completion("Medium", "Personal")
+        self.assertNotIn("first_blood", result2["new_achievements"])
+
+        # But it should still be in the saved list (just once)
+        count = self.g.stats["achievements"].count("first_blood")
+        self.assertEqual(count, 1)
+    
+    def test_dragon_slayer_achievement(self):
+        """Completing 5 High-priority tasks should unlock 'dragon_slayer'."""
+        # Complete 4 High tasks — not enough yet
+        for i in range(4):
+            result = self.g.record_completion("High", "Personal")
+            self.assertNotIn("dragon_slayer", result["new_achievements"])
+
+        # 5th High task — should unlock dragon_slayer
+        result = self.g.record_completion("High", "Personal")
+        self.assertIn("dragon_slayer", result["new_achievements"])
+
+        # Verify the counter was tracking correctly
+        self.assertEqual(self.g.stats["high_priority_completed"], 5)
+    
+    def test_renaissance_scribe_achievement(self):
+        """Completing tasks in 3+ different categories should unlock 'renaissance_scribe'."""
+        # Complete tasks in 2 categories — not enough
+        self.g.record_completion("Medium", "Work")
+        self.g.record_completion("Medium", "Work")  # Same category, shouldn't duplicate
+        self.assertEqual(len(self.g.stats["categories_completed"]), 1)
+
+        self.g.record_completion("Medium", "Personal")
+        self.assertEqual(len(self.g.stats["categories_completed"]), 2)
+        # Not unlocked yet
+        self.assertNotIn("renaissance_scribe", self.g.stats["achievements"])
+
+        # 3rd unique category — should unlock
+        result = self.g.record_completion("Medium", "Health")
+        self.assertIn("renaissance_scribe", result["new_achievements"])
+        self.assertEqual(len(self.g.stats["categories_completed"]), 3)
+        
+    
+
 
 
 if __name__ == "__main__":
