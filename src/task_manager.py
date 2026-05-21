@@ -1,7 +1,7 @@
 import json
 from datetime import datetime
 import os
-from gamification import GamificationManager, STATS_JSON_FILE
+from gamification import GamificationManager, STATS_JSON_FILE, ACHIEVEMENTS
 
 JSON_FILE = "todos.json"
 

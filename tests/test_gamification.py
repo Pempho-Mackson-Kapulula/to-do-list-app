@@ -1,6 +1,6 @@
 import os
 import unittest
-from gamification import GamificationManager, PRIORITY_XP, LEVEL_THRESHOLDS, ACHIEVEMENTS
+from gamification import GamificationManager, PRIORITY_XP, LEVEL_THRESHOLDS, ACHIEVEMENTS, LEVEL_TITLES
 
 class TestGamificationManager(unittest.TestCase):
     """Tests for the GamificationManager class."""

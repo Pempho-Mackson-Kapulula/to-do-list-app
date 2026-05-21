@@ -1,6 +1,7 @@
 import json
 import os
 from datetime import datetime, date, timedelta
+import tkinter as tk
 
 # The file where gamification stats are saved
 STATS_JSON_FILE = "stats.json"
@@ -254,14 +255,6 @@ class GamificationManager:
             ).pack(anchor=tk.W)
 
     def xp_progress_in_level(self):
-        """
-        Return two numbers: how much XP you have in the current level,
-        and how much XP you need total to reach the next level.
-
-        Example: If you're Level 1 (threshold 0) with 50 total XP,
-        and Level 2 needs 100 XP, you return (50, 100).
-        The GUI uses these for the progress bar.
-        """
         current_level = self.stats["level"]
         current_threshold = LEVEL_THRESHOLDS[current_level]
 
@@ -275,14 +268,6 @@ class GamificationManager:
         return xp_in_level, needed
 
     def update_streak(self):
-        """
-        Update the daily streak. Returns True if the streak changed.
-
-        Three cases:
-        1. Last completion was today → no change (already counted)
-        2. Last completion was yesterday → streak continues (+1)
-        3. Last completion was 2+ days ago → streak broken (reset to 1)
-        """
         today = date.today()
         last_str = self.stats["last_completion_date"]
 
@@ -311,14 +296,6 @@ class GamificationManager:
 
     
     def record_completion(self, priority, category="Personal"):
-        """
-        Called when a task is marked as done.
-        Updates streak, awards XP, checks for level up, and checks achievements.
-        Returns a dictionary with all the info the GUI needs to show a popup.
-
-        The 'category' parameter is new — it lets us track which categories
-        the user has completed tasks in (for the Renaissance Scribe achievement).
-        """
         streak_changed = self.update_streak()
         xp_earned = self.calculate_xp(priority)
 
