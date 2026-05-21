@@ -278,10 +278,13 @@ class TodoApp:
             message = "+" + str(xp) + " XP!" + bonus_text + "\nTotal: " + str(total) + " XP\nStreak: " + str(streak) + " days"
 
             if leveled_up:
-                message = "LEVEL UP! You are now Level " + str(level) + "!\n\n" + message
+                title = self.manager.gamification.get_level_title()
+                message = "LEVEL UP! You are now Level " + str(level) + " \u2014 " + title + "!\n\n" + message
                 messagebox.showinfo("Level Up!", message)
             else:
-                messagebox.showinfo("Task Complete!", message)
+                title = self.manager.gamification.get_level_title()
+                message = "+" + str(xp) + " XP!" + bonus_text + "\nTotal: " + str(total) + " XP (" + title + ")\nStreak: " + str(streak) + " days"
+                messagebox.showinfo("Level Up!", message)
 
         self.refresh_gamification_stats()
 
@@ -307,7 +310,7 @@ class TodoApp:
         stats = g.get_stats()
         xp_in_level, xp_needed = g.xp_progress_in_level()
 
-        self.level_label.config(text="Level " + str(stats["level"]))
+        self.level_label.config(text="Level " + str(stats["level"]) + " \u2014 " + g.get_level_title())
         self.xp_label.config(text=str(stats["total_xp"]) + " XP")
         self.streak_label.config(
             text="Streak: " + str(stats["current_streak"]) + " days (best: " + str(stats["longest_streak"]) + ")"

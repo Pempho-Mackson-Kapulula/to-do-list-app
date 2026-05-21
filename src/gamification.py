@@ -23,8 +23,22 @@ LEVEL_THRESHOLDS = {
     10: 2700,
 }
 
+
 # The highest level a user can reach
 MAX_LEVEL = max(LEVEL_THRESHOLDS.keys())
+
+LEVEL_TITLES = {
+    1: "Novice",      
+    2: "Squire",       
+    3: "Apprentice",  
+    4: "Warrior",      
+    5: "Knight",       
+    6: "Champion",     
+    7: "Crusader",
+    8: "Vanguard",     
+    9: "Paladin",      
+    10: "Legend",     
+}
 
 
 def streak_bonus_multiplier(streak):
@@ -123,6 +137,10 @@ class GamificationManager:
 
         # Did we level up? Compare old vs new
         return self.stats["level"] > old_level
+    
+    def get_level_title(self):
+        level = self.stats["level"]
+        return LEVEL_TITLES.get(level,"Unknown")
 
     def xp_progress_in_level(self):
         """
