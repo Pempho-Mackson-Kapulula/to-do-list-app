@@ -4,6 +4,7 @@ from tkcalendar import DateEntry
 from datetime import date
 from task_manager import TaskManager
 import os
+from gamification import ACHIEVEMENTS
 
 
 class TodoApp:
@@ -289,6 +290,14 @@ class TodoApp:
                 message = "+" + str(xp) + " XP!" + bonus_text + "\nTotal: " + str(total) + " XP (" + title + ")\nStreak: " + str(streak) + " days"
                 messagebox.showinfo("Level Up!", message)
 
+        new_achievements = gamification_result.get("new_achievements", [])
+        if new_achievements:
+            lines = []
+            for achievement_id in new_achievements:
+                info = ACHIEVEMENTS.get(achievement_id, {"icon": "?", "name": achievement_id, "description": ""})
+                lines.append(info["icon"] + " " + info["name"] + "\n   " + info["description"])
+            messagebox.showinfo("Achievement Unlocked!", "\n\n".join(lines))
+            
         self.refresh_gamification_stats()
 
     def delete_task(self):
