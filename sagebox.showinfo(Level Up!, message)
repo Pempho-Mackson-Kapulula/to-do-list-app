@@ -1,0 +1,83 @@
+[33mcommit e19219675d58110f465f2586e3c373fe1b39b638[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Pempho-Mackson-Kapulula <pemphomacksonkapulula@gmail.com>
+Date:   Wed May 20 13:28:59 2026 +0200
+
+    N:update main.py
+
+[33mcommit 159e5e3e38625546247bb3b331fae30431d56b6e[m
+Author: Pempho-Mackson-Kapulula <pemphomacksonkapulula@gmail.com>
+Date:   Wed May 20 13:27:13 2026 +0200
+
+    M:Fix test discovery: correct imports, PYTHONPATH, and add deadline validation
+
+[33mcommit 1a8fe9f4ae8c91ab08d8694bdc74c11c39ca8ffe[m
+Author: Pempho-Mackson-Kapulula <pemphomacksonkapulula@gmail.com>
+Date:   Wed May 20 13:10:08 2026 +0200
+
+    L: add scripts for running and testing the app
+
+[33mcommit 9a35149c638e5becaea48d1168266abbb3f873f1[m
+Author: Pempho-Mackson-Kapulula <pemphomacksonkapulula@gmail.com>
+Date:   Wed May 20 13:05:09 2026 +0200
+
+    K: add unit tests for methods in gamification module
+
+[33mcommit 374a9cfd5ab91f67d39c053bca74607af8e323f1[m
+Author: Pempho-Mackson-Kapulula <pemphomacksonkapulula@gmail.com>
+Date:   Wed May 20 12:16:20 2026 +0200
+
+    J: add gamification.py module
+
+[33mcommit 7a2820d10a2985cb39d156a41b5ccbcd25696959[m
+Author: Pempho-Mackson-Kapulula <pemphomacksonkapulula@gmail.com>
+Date:   Wed May 20 11:57:24 2026 +0200
+
+    I: add app_gui module for the gui
+
+[33mcommit f31653baa87932d9717058781b0a2d389963e5cb[m
+Author: Pempho-Mackson-Kapulula <pemphomacksonkapulula@gmail.com>
+Date:   Wed May 20 11:22:47 2026 +0200
+
+    H: add unit tests for task manager module
+
+[33mcommit 281a3db15e1cb5a5b5d5df9ee15d7ce86aa2883e[m
+Author: Pempho-Mackson-Kapulula <pemphomacksonkapulula@gmail.com>
+Date:   Wed May 20 11:08:24 2026 +0200
+
+    G: add methods to sort tasks and get task completion stats
+
+[33mcommit fabb541adeddd9b25057a080f22973eb6f4134fc[m
+Author: Pempho-Mackson-Kapulula <pemphomacksonkapulula@gmail.com>
+Date:   Wed May 20 10:48:59 2026 +0200
+
+    F:add toggle_task and delete_task methods  to task manager module
+
+[33mcommit a302a42e050f5fadaed70c804ad442dbfafa84e2[m
+Author: Pempho-Mackson-Kapulula <pemphomacksonkapulula@gmail.com>
+Date:   Wed May 20 10:36:54 2026 +0200
+
+    E:add add_task method to task manager
+
+[33mcommit 82bde6e664edba3c6d572d5165f02009436c88d6[m
+Author: Pempho-Mackson-Kapulula <pemphomacksonkapulula@gmail.com>
+Date:   Wed May 20 10:24:37 2026 +0200
+
+    D:add task manager module with methods to load and save tasks and add defaults to json file fileds
+
+[33mcommit 5938dc5b48d112f78d1a2af8c36e7313ccad2aa0[m
+Author: Pempho-Mackson-Kapulula <pemphomacksonkapulula@gmail.com>
+Date:   Wed May 20 10:06:20 2026 +0200
+
+    C: add main.py
+
+[33mcommit b622f9215c97b167674d3a03ece3e05b5867f04a[m
+Author: Pempho-Mackson-Kapulula <pemphomacksonkapulula@gmail.com>
+Date:   Tue May 19 16:30:48 2026 +0200
+
+    B:added files to .gitignore
+
+[33mcommit 42e17f02c705299b906aba23ccccb007ff98393a[m
+Author: Pempho-Mackson-Kapulula <pemphomacksonkapulula@gmail.com>
+Date:   Tue May 19 16:25:42 2026 +0200
+
+    A: add README and Python gitignore
