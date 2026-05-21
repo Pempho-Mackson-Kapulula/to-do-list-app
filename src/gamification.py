@@ -226,6 +226,32 @@ class GamificationManager:
         achievements.extend(newly_earned)
         return newly_earned
 
+    def refresh_achievements(self):
+        earned = self.manager.gamification.stats.get("achievements", [])
+
+        # Remove everything currently in the achievements frame
+        for widget in self.achievements_frame.winfo_children():
+            widget.destroy()
+
+        if not earned:
+            # No achievements earned yet — show the placeholder
+            ttk.Label(
+                self.achievements_frame,
+                text="No achievements yet",
+                font=("Helvetica", 8, "italic"),
+            ).pack(anchor=tk.W)
+            return
+
+        # Show each earned achievement as a small label: "icon name"
+        for achievement_id in earned:
+            # Look up the display info from the ACHIEVEMENTS dictionary
+            info = ACHIEVEMENTS.get(achievement_id, {"icon": "?", "name": achievement_id})
+            badge_text = info["icon"] + " " + info["name"]
+            ttk.Label(
+                self.achievements_frame,
+                text=badge_text,
+                font=("Helvetica", 8),
+            ).pack(anchor=tk.W)
 
     def xp_progress_in_level(self):
         """
