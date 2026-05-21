@@ -16,8 +16,6 @@ class TodoApp:
         self.root.geometry("900x650")
         self.root.minsize(800, 550)
 
-        # If no manager is provided (normal use), create a real one
-        # If one is provided (testing), use that instead
         if manager is None:
             self.manager = TaskManager()
         else:
@@ -29,8 +27,6 @@ class TodoApp:
         apply_theme(self.root)
 
     def create_widgets(self):
-        """Build all the UI elements in a compact, minimal split layout."""
-
         # Outer frame with tighter padding to save window edge space
         main_frame = ttk.Frame(self.root, padding="10")
         main_frame.pack(fill=tk.BOTH, expand=True)
