@@ -54,6 +54,9 @@ class TodoApp:
 
         self.streak_label = ttk.Label(stats_frame, text="Streak: 0 days", font=("Helvetica", 9))
         self.streak_label.pack(anchor=tk.W)
+        self.achievements_frame = ttk.Frame(stats_frame)
+        self.achievements_frame.pack(fill=tk.X, pady=(6, 0))
+        
 
         # Compact Form Input Section
         input_frame = ttk.LabelFrame(left_panel, text=" New Task ", padding="10")

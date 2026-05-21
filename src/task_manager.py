@@ -86,7 +86,7 @@ class TaskManager:
             task["done"] = True
             
         if task["done"] == True and task["xp_awarded"] == False:
-            gamification_result = self.gamification.record_completion(task["priority"])
+            gamification_result = self.gamification.record_completion(task["priority"],task["category"])
             task["xp_awarded"] = True
             
         elif task["done"] == False:
